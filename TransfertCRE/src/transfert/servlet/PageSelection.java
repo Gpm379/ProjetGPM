@@ -23,7 +23,7 @@ import javax.servlet.http.*;
 import transfert.pages.HTMLheader;
 import transfert.requetes.*;
   
-/** 
+/**   
  * Servlet implementation class PageSelection
  */ 
 @WebServlet(description = "Selection transfert CRE", urlPatterns = { "/transfert.servlet.PageSelection" })
