@@ -30,7 +30,7 @@ import transfert.requetes.*;
 public class PageSelection extends HttpServlet {
    
 	private static final long serialVersionUID = 1L;
-
+ 
 	// Variables paramètres servlet serveurs/version CSS/version JS 
     static String serveurLOC, serveurDEV, serveurREC, serveurPROD; 
     static String loginREC, loginPROD;
