@@ -28,7 +28,7 @@ import transfert.requetes.*;
  */ 
 @WebServlet(description = "Selection transfert CRE", urlPatterns = { "/transfert.servlet.PageSelection" })
 public class PageSelection extends HttpServlet {
-   
+    
 	private static final long serialVersionUID = 1L;
  
 	// Variables paramètres servlet serveurs/version CSS/version JS 
