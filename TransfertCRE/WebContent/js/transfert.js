@@ -1,6 +1,6 @@
 /****************************************************************
  transfert.js  : javascript applications transfert CRE 
-                 Le 16/06/2025
+                 Le 16/06/2025, Modifié le 2/12/2025
 ****************************************************************/
 // Variables globales
 var allowed = false;
@@ -33,8 +33,8 @@ var DateJour  = Jour + " " + TableMois[Mois] + " " + Annee ;
 var HeureJour = heure + "h" + minutes +"m";
 var touche1;
 
-// Erreurs détectées  
-var Erreur = new Array();    // CRE
+// Erreurs détectées / Champs
+var Erreur = new Array();    
 
 //********************************************************
 // Fonction Verification Caractère
@@ -47,66 +47,85 @@ function VerificationCar(e) {
 } // Fin VerificationCar
 
 //********************************************************
-//     Gestion du formulaire ID CRE 
-//********************************************************
+//     Gestion formulaire de saisie
+//     Rappel 
+//     focus = récupère le focus
+//     blur  = perd le focus 
+//******************************************************** 
 
-// Gestion saisie des codes CRE Colonne 1 
+// Codes CRE 1 ---------------------------------------------  
 function codeAssure(type) {
     
-    // Initialisation 
+    // Initialisation curseur
     document.body.style.cursor = 'default';  
     
-    // Initialisation couleur d'origine
+    // Initialisation couleur 
     document.getElementById("gt1").style.backgroundColor = ""; 
     document.getElementById("gt1").style.color = "black";
  
     document.getElementById("gt2").style.backgroundColor = ""; 
     document.getElementById("gt2").style.color = "black";
     
+	document.getElementById("typecou").style.backgroundColor = ""; 
+	document.getElementById("typecou").style.color = "black"; 	
+	
+	document.getElementById("codeadh").style.backgroundColor = ""; 
+	document.getElementById("codeadh").style.color = "black"; 	
+	
+	document.getElementById("datecr").style.backgroundColor = ""; 
+	document.getElementById("datecr").style.color = "black";	
+	
     document.getElementById("ListSource").style.backgroundColor = ""; 
     document.getElementById("ListSource").style.color = "black";  
   
     document.getElementById("ListCible").style.backgroundColor = ""; 
     document.getElementById("ListCible").style.color = "black";  
     
-    // Récupération valeur code assuré (numérique sur 7 maxi)
-    // A revoir c'est un TextArea
-    //formulaire = document.getElementById("myform").name;
+	// Initialisation code erreur
+	Erreur[0]=false;Erreur[1]=false;Erreur[2]=false;Erreur[3]=false;Erreur[4]=false; 
+ 
+     var assure = document.getElementById("gt1").value;
+	//console.log("Longueur code CRE saisi " + assure.length);
     
-    var assure = document.getElementById("gt1").value;
-    Erreur[0] = false; 
-    
-    // Focus du code Assuré 
+    // Focus 
     if (type == "focus" && assure == "") {
        document.getElementById("gt1").style.backgroundColor = "yellow"; 
        document.getElementById("gt1").style.color = "black";     
     }
     if (type == "focus" && assure != "") {
        if (isNaN(assure)) {
-          document.getElementById("gt1").value= "";
+         // En cas d'erreur on n'efface plus le champ		
+         // document.getElementById("gt1").value= "";
        }
        else { 
           document.getElementById("gt1").style.backgroundColor = "yellow"; 
           document.getElementById("gt1").style.color = "black"; 
        }
+	   
     }
-    // Blur du code Assuré
+	
+    // Blur 
     if (type == "blur" && assure.trim != "") {
 	   assure = assure.replace(/(\r\n|\n|\r)/gm,"");
-       if (isNaN(assure)) {   // Saisie KO  ----------------
+       if (isNaN(assure)) {       // Quitter Saisie KO  ----------------
           //console.log(touche1);
-          if (touche1 != 13) {   // <> de la touche Entrée 
+          if (touche1 != 13) {    // <> de la touche Entrée 
              alert("Le code CRE doit toujours \u00eatre num\u00e9rique ! ");
              Erreur[0] = true;
              document.getElementById("gt1").focus();
-             document.getElementById("gt1").value= "";
+             document.getElementById("gt1").value= ""; 
              document.getElementById("Msg").innerHTML = "  ";
           }
        }
-       else {                // Saisie OK -> passer au champ suivant 
-          document.getElementById("gt1").style.backgroundColor = "";
-          document.getElementById("gt1").style.color = "green";
-          document.getElementById("gt2").focus();   
+       else {                   // Quitter Saisie OK -> passer au champ suivant 
+		   if (!Erreur[0]) { 
+              document.getElementById("gt1").style.backgroundColor = "";
+              document.getElementById("gt1").style.color = "green";
+			  //document.getElementById("codeadh").value = "";
+			  //document.getElementById("typecou").value = "";
+			  //document.getElementById("datecr").value  = "";
+              //document.getElementById("gt2").focus();
+		    }   
        }
     }
     
@@ -114,25 +133,24 @@ function codeAssure(type) {
         document.getElementById("gt1").style.backgroundColor = "";
     }
 
-    return;     // Fin fonction codeAssure colonne 1
+    return;     // Fin CRE 1
 }
 
-// Gestion saisie code CRE Colonne 2
+// Code CRE 2 -----------------------------------------------
 function codeAssure2(type) {
     
     // Initialisation 
     document.body.style.cursor = 'default';  
     var assure2 = document.getElementById("gt2").value;
-    Erreur[1] = false; 
     
-    // Focus du code Assuré 
+    // Focus 
     if (type == "focus" && assure2.trim == "") {
        document.getElementById("gt2").style.backgroundColor = "yellow"; 
        document.getElementById("gt2").style.color = "black";     
     }
     if (type == "focus" && assure2.trim != "") {
        if (isNaN(assure2)) {
-          document.getElementById("gt2").value= "";
+         //document.getElementById("gt2").value= "";
        }
        else { 
           document.getElementById("gt2").style.backgroundColor = "yellow"; 
@@ -141,12 +159,12 @@ function codeAssure2(type) {
        
     }
      
-    // Blur du code Assuré
+    // Blur 
     if (type == "blur" && assure2.trim != "") {
 	   assure2 = assure2.replace(/(\r\n|\n|\r)/gm,"");
-       if (isNaN(assure2)) {      // Saisie KO -------- 
+       if (isNaN(assure2)) {       // Quitter Saisie KO -------- 
           //console.log(touche1);
-          if (touche1 != 13) {    // <> de la touche Entrée 
+          if (touche1 != 13) {     // <> de la touche Entrée 
              alert("Le code CRE doit toujours \u00eatre num\u00e9rique ! ");
              Erreur[1] = true;
              document.getElementById("gt2").focus();
@@ -155,10 +173,15 @@ function codeAssure2(type) {
           }
        
        }
-       else {   // Saisie OK -> passer au champ suivant 
+       else {                    // Quitter Saisie OK -> passer au champ suivant  
+		if (!Erreur[1]) {
           document.getElementById("gt2").style.backgroundColor = "";
           document.getElementById("gt2").style.color = "green";
-          //document.getElementById("ListSource").focus();
+		  //document.getElementById("codeadh").value = "";
+		  //document.getElementById("typecou").value = "";
+		  //document.getElementById("datecr").value  = "";
+          //document.getElementById("typecou").focus();
+		  }
        }
         
     }
@@ -166,10 +189,151 @@ function codeAssure2(type) {
         document.getElementById("gt2").style.backgroundColor = "";
     }
 
-    return;     // Fin fonction codeAssure colonne 2
+    return;     // Fin CRE 2
 }
 
-// Gestion système source  
+// Type courrier  ----------------------------------------------
+function typeCourrier(type) {
+    
+	// Erreur CRE 1  
+	if (Erreur[0]) {
+	    document.getElementById("gt1").focus();
+	    return;
+	}
+	// Erreur CRE 2 
+	if (Erreur[1]) {
+	    document.getElementById("gt2").focus();
+	    return;
+	}
+
+    // Initialisation 
+    document.body.style.cursor = 'default';  
+    var typecourrier = document.getElementById("typecou").value;
+    typecourrier = typecourrier.toUpperCase();
+    
+    
+    // Focus  
+    if (type == "focus" && typecourrier == "") {
+       document.getElementById("typecou").style.backgroundColor = "yellow"; 
+       document.getElementById("typecou").style.color = "black";     
+    }
+	
+    // Blur 
+    if (type == "blur" && typecourrier.trim != "") {  // Saisie OK 
+		document.getElementById("typecou").style.backgroundColor = "";
+		document.getElementById("typecou").style.color = "green";
+		document.getElementById("typecou").value = typecourrier;
+		
+		//document.getElementById("codeadh").focus();  
+		//document.getElementById("gt1").value = "";  
+		//document.getElementById("gt2").value = "";  
+     }
+        
+    if (type == "blur" && typecourrier.trim == "") {
+        document.getElementById("typecou").style.backgroundColor = "";
+    }
+
+    return;     // Fin type 
+}
+
+// Code adhérent  -----------------------------------------------
+function codeAdherent(type) {
+
+	// Erreur CRE 1  
+	if (Erreur[0]) {
+	    document.getElementById("gt1").focus();
+	    return;
+	}
+	// Erreur CRE 2 
+	if (Erreur[1]) {
+	    document.getElementById("gt2").focus();
+	    return;
+	}
+	    
+    // Initialisation 
+    document.body.style.cursor = 'default';  
+    var codeadh = document.getElementById("codeadh").value;
+    
+    // Focus 
+    if (type == "focus" && codeadh == "" && !Erreur[3]) {
+       document.getElementById("codeadh").style.backgroundColor = "yellow"; 
+       document.getElementById("codeadh").style.color = "black";     
+    }
+	
+    // Blur 
+    if (type == "blur" && codeadh.trim != "") {     
+		if (isNaN(codeadh)) {       // Saisie KO  ----------------
+		    //console.log(touche1);
+		    if (touche1 != 13) {    // <> de la touche Entrée 
+		       alert("Le code adh\u00e9rent doit toujours \u00eatre num\u00e9rique ! ");
+		       Erreur[3] = true;
+		       document.getElementById("codeadh").focus();
+		       document.getElementById("codeadh").value= ""; 
+		       document.getElementById("Msg").innerHTML = "  ";
+			   //document.getElementById("codeadh").style.backgroundColor = "red";
+			   //return;
+		    }
+		 }
+		 else {
+			if (!Erreur[3]) { 
+			   document.getElementById("codeadh").style.backgroundColor = "";
+			   document.getElementById("codeadh").style.color = "green";
+			   //document.getElementById("datecr").focus();	
+			   //document.getElementById("gt1").value = "";  
+			   //document.getElementById("gt2").value = "";  
+			}		
+		 }		
+     }
+        
+    if (type == "blur" && codeadh.trim == "") {
+        document.getElementById("codeadh").style.backgroundColor = "";
+    }
+
+    return;     // Fin adhérent
+}
+
+// Date CRE ---------------------------------------------------
+function dateCRE(type) {
+    
+	// Erreur CRE 1  
+	if (Erreur[0]) {
+	    document.getElementById("gt1").focus();
+	    return;
+	}
+	// Erreur CRE 2 
+	if (Erreur[1]) {
+	    document.getElementById("gt2").focus();
+	    return;
+	}
+	
+    // Errreur Adhérent
+    if (Erreur[3]) {
+        document.getElementById("codeadh").focus();
+        return;
+    }
+	
+    // Récupération de la date fin (JJ/MM/AAAA)
+    var dateCRE = document.getElementById("datecr").value;
+    
+    // Focus 
+    if ( type == "focus" ) {
+       document.getElementById("datecr").style.backgroundColor = "yellow"; 
+       document.getElementById("datecr").style.color = "black"; 
+    }
+    
+	// Blur 
+    if ( type == "blur" &&  dateCRE.trim != "") {
+       document.getElementById("datecr").style.backgroundColor = "";
+       document.getElementById("datecr").style.color = "green";
+	   //document.getElementById("ListSource").focus();
+	   //document.getElementById("gt1").value = "";  
+	   //document.getElementById("gt2").value = "";  
+    }
+        
+    return;
+}
+
+// Système source -------------------------------------------------
 function source(type) { 
     
     // Controle si erreur sur code colonne 1 
@@ -182,13 +346,19 @@ function source(type) {
         document.getElementById("gt2").focus();
         return;
     }
+	
+	// Controle si erreur sur adhérent 
+	if (Erreur[3]) {
+	   document.getElementById("codeadh").focus();
+	   return;
+	}
     
     // Récupération du statut 
     var ObjListe = document.getElementById('ListSource');
     var SelIndex = ObjListe.selectedIndex;
     var vsource  = ObjListe.options[ObjListe.selectedIndex].value;
     
-    // Focus statut  
+    // Focus 
     if (type == "focus" && vsource == "") {
        document.getElementById("ListSource").style.backgroundColor = "yellow"; 
        document.getElementById("ListSource").style.color = "black";
@@ -202,6 +372,7 @@ function source(type) {
     if (type == "blur" && vsource != "") {
        document.getElementById("ListSource").style.backgroundColor = "";
        document.getElementById("ListSource").style.color = "green";
+	   document.getElementById("ListCible").focus();
     }
     
     if (type == "blur" && vsource == "") {
@@ -209,9 +380,10 @@ function source(type) {
     }
  
     return;
+	
 }
 
-// Gestion système cible   
+// Système cible --------------------------------------------------------  
 function cible(type) {
     
    // Controle si erreur sur code colonne 1 
@@ -225,6 +397,12 @@ function cible(type) {
         return;
     }
  
+	// Controle si erreur sur adhérent 
+	if (Erreur[3]) {
+	   document.getElementById("codeadh").focus();
+	   return;
+	}	
+	
     // Récupération système cible 
     var ObjListe = document.getElementById('ListCible');
     var SelIndex = ObjListe.selectedIndex;
@@ -244,22 +422,28 @@ function cible(type) {
     if (type == "blur" && vcible != "") {
        document.getElementById("ListCible").style.backgroundColor = "";
        document.getElementById("ListCible").style.color = "green";
-    }
+	}
     
     if (type == "blur" && vcible == "") {
         document.getElementById("ListCible").style.backgroundColor = "";
+	
     }
  
     return;
 }
 
-// Valider Formulaire CRE
+// Valider Formulaire CRE ---------------------------------
 function ValidationGlobale(formulaire) {
 
-    // Récupération de toutes les variables du formulaire 
-    var assure     = document.getElementById("gt1").value;
-    var assure2    = document.getElementById("gt2").value;
-    
+	// --------------------------------------------------------------
+    // Récupération global des données du formulaire 
+	// --------------------------------------------------------------
+    var assure  = document.getElementById("gt1").value;
+    var assure2 = document.getElementById("gt2").value;
+	var typecourrier = document.getElementById("typecou").value;    
+	var codeadh = document.getElementById("codeadh").value;
+	var dateCRE = document.getElementById("datecr").value;
+	
     var ObjListeS  = document.getElementById('ListSource');
     var SelIndex   = ObjListeS.selectedIndex;
     var vsource    = ObjListeS.options[ObjListeS.selectedIndex].value;
@@ -268,55 +452,120 @@ function ValidationGlobale(formulaire) {
     var SelIndex   = ObjListeC.selectedIndex;
     var vcible     = ObjListeC.options[ObjListeC.selectedIndex].value;
     
-    // Controle des données saisies
+	// --------------------------------------------------------------------------------------------------
+    // Controle global des données saisies
+	// --------------------------------------------------------------------------------------------------
     
-    // 1) Controle validité des CRE saisis 
-    // Assure col 1
-    assure = assure.replace(/(\r\n|\n|\r)/gm,"");
-    if (isNaN(assure)) {
-       //alert("Touche appuyée validation : " + touche1);
-       //console.log(touche1);
-       alert("Le code CRE doit toujours \u00eatre num\u00e9rique ! ");
-       Erreur[0] =true;
-       document.getElementById("gt1").focus();
-       document.getElementById("gt1").value= "";
-       document.getElementById("Msg").innerHTML = "  ";
-       return false;
-    }  
- 
-    // Assure col 2
-    assure2 = assure2.replace(/(\r\n|\n|\r)/gm,"");
-    if (isNaN(assure2)) {
-       //alert("Touche appuyée validation : " + touche1);
-       //console.log(touche1);
-       alert("Le code CRE doit toujours \u00eatre num\u00e9rique ! ");
-       Erreur[1] =true;
-       document.getElementById("gt2").focus();
-       document.getElementById("gt2").value= "";
-       document.getElementById("Msg").innerHTML = "  ";
-       return false;
-    }
-       
-    if (assure.trim() == '' && assure2.trim() == '') {
-       //document.getElementById("Msg").innerHTML = "  ";
-       alert("Le code CRE est obligatoire ! ");
-       Erreur[0] =true;
-       document.getElementById("gt1").focus();
-       document.getElementById("gt1").value= "";
-       document.getElementById("Msg").innerHTML = "  ";
-       return false;
-     } 
+ 	// Controle CRE & critères saisis -------------------------------------------------------------------
+    // Règle: Saisir un ou plus CRE , sinon saisir au moins 2 critères
+	// var typecourrier = document.getElementById("typecou").value;    
+	// var codeadh = document.getElementById("codeadh").value;
+	// var dateCRE = document.getElementById("datecr").value;
+	 
+	console.log(typecourrier);
+	console.log(codeadh);
+	console.log(dateCRE);       
+
+	// Controle présence d'au moins 1 code CRE si aucun autre critères saisis --------------------------
+	if (assure.trim() == '' && assure2.trim() == '' &&	
+	    typecourrier.trim() == '' && codeadh.trim() == '' && dateCRE.trim() == '') {		
+	    //document.getElementById("Msg").innerHTML = "  ";
+	    alert("Au moins un code CRE est obligatoire ! ");
+	    Erreur[0] =true;
+	    document.getElementById("gt1").focus();
+	    //document.getElementById("gt1").value= "";
+	    document.getElementById("Msg").innerHTML = "  ";
+	    return false;
+	} 
+	 
+	// Si pas de CRE saisis, je controle que 2 autres critères ont bien été saisis  
+	if (assure.trim() == '' && assure2.trim() == '') {
+
+		// Type courrier & ...
+		if (typecourrier.trim() != '' && codeadh.trim() == '' && dateCRE.trim() == '') {
+			alert("Saisir un autre critere avec le type courrier ! ");
+			document.getElementById("codeadh").focus();
+			document.getElementById("gt1").value= "";
+			document.getElementById("Msg").innerHTML = "  ";
+			return false;
+		}
+
+		// Code adhérent & ....
+		if (typecourrier.trim() == '' && codeadh.trim() != '' && dateCRE.trim() == '') {
+			alert("Saisir un autre critere avec le code adhérent ! ");
+			document.getElementById("typecou").focus();
+			document.getElementById("gt1").value= "";
+			document.getElementById("Msg").innerHTML = "  ";
+			return false;
+		}
+
+		// Date CRE &...
+		if (typecourrier.trim() == '' && codeadh.trim() == '' && dateCRE.trim() != '') {
+			alert("Saisir un autre critere avec la date du CRE ! ");
+			document.getElementById("datecr").focus();
+			document.getElementById("gt1").value= "";
+			document.getElementById("Msg").innerHTML = "  ";
+			return false;
+		}
+
+	}
+
+	else {
+
+		// Controle cohérence CRE 1 ---------------------------------------------- 
+		assure = assure.replace(/(\r\n|\n|\r)/gm,"");
+		if (isNaN(assure)) {
+		   //alert("Touche appuyée validation : " + touche1);
+		   //console.log(touche1);
+		   alert("Le code CRE doit toujours \u00eatre num\u00e9rique ! ");
+		   Erreur[0] =true;
+		   document.getElementById("gt1").focus();
+		   document.getElementById("codeadh").value = "";
+		   document.getElementById("typecou").value = "";
+		   document.getElementById("datecr").value  = "";
+		  // document.getElementById("gt1").value= "";
+		   document.getElementById("Msg").innerHTML = "  ";
+		   return false;
+		}  		
+		 
+		// Controle cohérence CRE 2 ----------------------------------------------
+		assure2 = assure2.replace(/(\r\n|\n|\r)/gm,"");
+		if (isNaN(assure2)) {
+		   //alert("Touche appuyée validation : " + touche1);
+		   //console.log(touche1);
+		   alert("Le code CRE doit toujours \u00eatre num\u00e9rique ! ");
+		   Erreur[1] =true;
+		   document.getElementById("gt2").focus();
+		// document.getElementById("gt2").value= "";
+		   document.getElementById("Msg").innerHTML = "  ";
+		   return false;
+		}		
+		
+	}
      
-    // 2) Controle cohérence des critères saisis dans le formulaire avant envoi requete
- /*   if (criteres == '')  {
-       //alert("Attention ! Au moins UN crit\350re doit \352tre renseign\351...");
-       document.getElementById("gt1").focus();     
-       Erreur[1] =true;
-       return false;
-    }    
- */
-     
-    // un serveur source doit être renseigné
+  
+	// Controle si présence CRE avec d'autres critères --------------------------
+	if (assure.trim() != '' || assure2.trim() != '') { 
+ 	    	
+	    if (typecourrier.trim() != '' || codeadh.trim() != '' || dateCRE.trim() != '') {		
+	       //document.getElementById("Msg").innerHTML = "  ";
+	       alert("Saisir soit un (ou +) code CRE , soit 2 autres criteres ! ");
+	       Erreur[0] =true;
+	       document.getElementById("gt1").focus();
+	       //document.getElementById("gt1").value= "";
+	       document.getElementById("Msg").innerHTML = "  ";
+	       return false;
+	    }
+	    
+	} 
+	 
+	//console.log(typecourrier);
+	//console.log(codeadh);
+	//console.log(dateCRE);
+	 
+ 	// Controle choix environnement ---------------------------------------------------------------------
+	
+    // Environnment source -------------------------------------------
     if (vsource.trim() == '') {
        alert("Renseigner l'environnement de d\u00e9part !");
        Erreur[2] = true;
@@ -325,7 +574,7 @@ function ValidationGlobale(formulaire) {
        return false;
     }
  
-    // un serveur cible doit être renseigné
+    // Environnement cible --------------------------------------------
     if (vcible.trim() == '') {
        alert("Renseigner l'environnement d'arriv\u00e9e !");
        Erreur[2] = true;
@@ -334,7 +583,7 @@ function ValidationGlobale(formulaire) {
        return false;
     }  
      
-    // serveur source doit être <> serveur cible 
+    // Controle env. source <> env cible -------------------------------------------
     if ((vcible == vsource) | (vsource == "RECETTE" & vcible == "RECETTE et DEV")
          | (vsource == "DEV" & vcible == "RECETTE et DEV")) {
        document.getElementById("Msg").innerHTML = "  ";
@@ -348,53 +597,16 @@ function ValidationGlobale(formulaire) {
     document.body.style.cursor = 'progress';
     return true;    
      
-}    // Fin Valider formulaire Transfert des CRE 
+}   // Fin Valider données formulaire CRE 
+
 
 //*************************************************************************************
 // Functions Jquery  
 //*************************************************************************************
 $(function() { 
 
-// Date début sélection période formulaire GESTIP
-$( "#datedebut6" ).datepicker( {
-    autoSize: "true",
-    altField: "#datedebut6",
-    closeText: 'Fermer',
-    prevText: 'Pr&eacute;c&eacute;dent',
-    nextText: 'Suivant',
-    currentText: 'Aujourd\'hui',
-    monthNames: ['Janvier', 'F&eacute;vrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'A&eacute;t', 'Septembre', 'Octobre', 'Novembre', 'D&eacute;cembre'],
-    monthNamesShort: ['Janv.', 'F&eacute;vr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Ao&eacute;t', 'Sept.', 'Oct.', 'Nov.', 'D&eacute;c.'],
-    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-    dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-    weekHeader: 'Sem.',
-    dateFormat: 'dd-mm-yy' ,   
-    firstDay: "1"
-	});
-
-// Date fin sélection période formulaire GESTIP   
-$("#datefin7").datepicker({
-  autoSize: "true",
-  altField: "#datefin7",
-  closeText: 'Fermer',
-  prevText: 'Pr&eacute;c&eacute;1dent',
-  nextText: 'Suivant',
-  currentText: 'Aujourd\'hui',
-  monthNames: ['Janvier', 'F&eacute;vrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Ao&eacute;t', 'Septembre', 'Octobre', 'Novembre', 'D&eacute;cembre'],
-  monthNamesShort: ['Janv.', 'F&eacute;vr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Ao&eacute;t', 'Sept.', 'Oct.', 'Nov.', 'D&eacute;c.'],
-  dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-  dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-  dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-  weekHeader: 'Sem.',
-  dateFormat: 'dd-mm-yy' ,   
-  firstDay: "1"
-  });
-  // Initialisation date jour       
-  $("#datefin7").val($.datepicker.formatDate('dd-mm-yy', new Date()));
-
-// Date début sélection période formulaire BPIJ
-$("#Bdatedebut").datepicker( {
+// Date sélection CRE 
+$("#datecr").datepicker( {
   autoSize: "true",
   altField: "#Bdatedebut",
   closeText: 'Fermer',
@@ -411,48 +623,7 @@ $("#Bdatedebut").datepicker( {
   firstDay: "1"
   });    
 
-// Date fin sélection période formulaire BPIJ   
-$( "#Bdatefin" ).datepicker({
-  autoSize: "true",
-  altField: "#Bdatefin",
-  closeText: 'Fermer',
-  prevText: 'Pr&eacute;c&eacute;dent',
-  nextText: 'Suivant',
-  currentText: 'Aujourd\'hui',
-  monthNames: ['Janvier', 'F&eacute;vrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Ao&eacute;t', 'Septembre', 'Octobre', 'Novembre', 'D&eacute;cembre'],
-  monthNamesShort: ['Janv.', 'F&eacute;vr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Ao&eacute;t', 'Sept.', 'Oct.', 'Nov.', 'D&eacute;c.'],
-  dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-  dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-  dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-  weekHeader: 'Sem.',
-  dateFormat: 'dd-mm-yy' ,   
-  firstDay: "1"
-  });    
-
   // Initialisation date jour       
-  $("#Bdatefin").val($.datepicker.formatDate('dd-mm-yy', new Date()));
-  
-//Tableau prestation
-  $('#gestip').dataTable({
-      
-      "language": {search: "Rechercher&nbsp;:",
-   	               zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher"
-   	           },                   
-      "order": [],
-      "info":  false,
-      "scrollY": "400px",
-      "scrollCollapse": true,
-      "paging": false,
-      "columns": [
-          null,
-          null,
-          null,
-          null,
-          { type: 'date-eu', targets: 0 },
-          null,
-          null,
-          null]
-   	           
-      });      
+  //$("#BdateCRE").val($.datepicker.formatDate('dd-mm-yy', new Date()));
   
 });

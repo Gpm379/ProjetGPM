@@ -37,7 +37,9 @@ public class Login {
 	public StringBuffer GetPageLogin() {
 
 		// <head>
-		HTMLheader header = new HTMLheader("CRE - Transfert CRE inter-syst&egrave;me", "Groupe Pasteur Mutualit&eacute; - Version 1.0");
+		HTMLheader header = new HTMLheader("CRE - Transfert CRE inter-syst&egrave;me",
+                                           "&copy; Groupe Pasteur Mutualit&eacute; - Version 1.1");
+		
 		sb.append(header.GetPageHeaderBase());
 		
         // <body>

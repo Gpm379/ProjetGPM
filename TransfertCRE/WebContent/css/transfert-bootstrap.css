@@ -49,8 +49,9 @@ body.login {
     text-align: center;
 }
 
-.btn-danger {
-    margin-left: 100px;
+.btn-danger { 
+	margin-top: 25px;
+    margin-left: 25px;
     font-weight: bold;
     text-align: center;
 }
@@ -270,7 +271,7 @@ div.footer {
 
 /* <legend> */
 .fieldset {
-  border: 1px solid white;
+  border: 2px solid white;
   margin-bottom: 2px;
   padding: 10px;
 }
@@ -291,7 +292,7 @@ padding:2px 0;
 #entete {
 background-color: silver;
 text-align:center;
-height:   
+height:auto;   
 }
 
 #main {

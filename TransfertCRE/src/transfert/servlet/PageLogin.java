@@ -209,7 +209,7 @@ public class PageLogin extends HttpServlet {
 		String MotdePasseMaj = MotdePasse;
 		
 		// Détermination de l'environnement d'exécution
-		if (ServeurMaj.equals("LOCALHOST"))               {Serveur = "S44C0638";} // Forcer le serveur DEV 
+		if (ServeurMaj.equals("LOCALHOST"))                 {Serveur = "S44C0638";} // Forcer le serveur DEV 
 		//if (ServeurMaj.equals(serveurDEV.toUpperCase()))  {Serveur = serveurDEV;}	
 		//if (ServeurMaj.equals(serveurREC.toUpperCase()))  {Serveur = serveurREC;}	
 		//if (ServeurMaj.equals(serveurPROD.toUpperCase())) {Serveur = serveurPROD;}
