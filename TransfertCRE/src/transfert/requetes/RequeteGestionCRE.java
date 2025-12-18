@@ -190,9 +190,10 @@ public class RequeteGestionCRE {
 		}		
 		// 3) ADHERENT / DATE
 		if (!parametres[3].equals("") && !parametres[4].equals("")) {
+			MadateCreation = FormatDate.FormatPeriodeAAMMJJ(parametres[4]) ;
 			querylectCRE = "WHERE FENADH = '" + parametres[3] + "' "
-            	           + "AND FEDCRT = '" + parametres[4] + "'"; 
-		}
+            	           + "AND FEDCRT = '" + MadateCreation + "'"; 
+		} 
 		// 4) TYPE COURRIER / ADHERENT / DATE 
 		if (!parametres[2].equals("") && !parametres[3].equals("") && !parametres[4].equals("")) {
 			MadateCreation = FormatDate.FormatPeriodeAAMMJJ(parametres[4]) ;
