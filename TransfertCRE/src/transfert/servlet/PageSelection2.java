@@ -57,8 +57,9 @@ public class PageSelection2 extends HttpServlet {
 	// Résultat requête
 	static String Message;
 	static boolean OKKO; 
+	static String chaine; 
 	
-	// Préparation page
+	// Préparation html header 
 	HTMLheader header = new HTMLheader("CRE - Transfert CRE inter-syst&egrave;me",
 			                           "&copy; Groupe Pasteur Mutualit&eacute; - Version 1.1");	
 	
@@ -67,7 +68,6 @@ public class PageSelection2 extends HttpServlet {
      */
     public PageSelection2() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -99,9 +99,17 @@ public class PageSelection2 extends HttpServlet {
 		retourMenu = getInitParameter("retourMenu");
  		lienQuitter = getInitParameter("lienQuitter"); 		
 		lienErreur  = getInitParameter("lienErreur");
-		// Valeurs dans ini()
-		System.out.println("Initialisation servlet :" + Servlet);
 		
+		// Initialisation variable(s) pour AutoCompletion ------------------------------------------------
+		RequeteGestionCRE listAutoCompletion = new RequeteGestionCRE(serveurDEV, "AVTTST06", "AVTTST06");
+        chaine = "var liste = " + listAutoCompletion.chargementlistAutoCompletion();
+    	if (!listAutoCompletion.getOKKO()) {chaine = "var liste = [" + "\"" + "!ERREUR!" + "\"" + "]";}
+    	//System.out.println(chaine);
+		// ----------------------------------------------------------------------------------------------
+
+		// Fin init Servlet 
+    	System.out.println("Initialisation servlet :" + Servlet);
+
 	}
 
 	/**
@@ -144,22 +152,22 @@ public class PageSelection2 extends HttpServlet {
 			request.getRequestDispatcher(lienErreur).forward(request, response);  // a mettre en commentaire pour dév.
 			
 			// ------------ Creation d'une session http temporaire pour dév. -----> A retirer après les DEV
-//			HttpSession SessionLogin = request.getSession(true);
-//			//if session is not new then we are switching the session and start
-//			// a new one
-//			if (!(SessionLogin.isNew())) {
-//			   SessionLogin.invalidate();
-//			   SessionLogin = request.getSession(true);
-//			}
-//  
-//			// Juste le profil 
-//			SessionLogin.setAttribute("Utilisateur", "AVTTST06");
-//			SessionLogin.setAttribute("Serveur", "localhost");
-//			SessionLogin.setAttribute("MotdePasse", "AVTTST06");
-//			SessionLogin.setAttribute("BibFichier", "AVTGPMDTA");
-//
-//			// Récup informations session utilisateur
-//			sessionHTTP = request.getSession(false);
+			//HttpSession SessionLogin = request.getSession(true);
+			//if session is not new then we are switching the session and start
+			// a new one
+			//if (!(SessionLogin.isNew())) {
+			//   SessionLogin.invalidate();
+			//   SessionLogin = request.getSession(true);
+			//}
+  
+			// Juste le profil 
+			//SessionLogin.setAttribute("Utilisateur", "AVTTST06");
+			//SessionLogin.setAttribute("Serveur", "localhost");
+			//SessionLogin.setAttribute("MotdePasse", "AVTTST06");
+			//SessionLogin.setAttribute("BibFichier", "AVTGPMDTA");
+
+			// Récup informations session utilisateur
+			//sessionHTTP = request.getSession(false);
 			
 		}
 			
@@ -200,10 +208,6 @@ public class PageSelection2 extends HttpServlet {
 			// Serveur cible 
 			if (request.getParameter("stat2") != null) {p_formulaire[6] = request.getParameter("stat2");}
    		    else {p_formulaire[6] = "";}
-			
-			// TODO : Prévoir controle des paramètres reçus avant envoi de la requête 
-			// ToolBox ctrl = new ToolBox(p_code);			
-            // Controler les codes CRE saisis
 				
 			// Analyse paramètres du formulaire 
 			if (!p_formulaire[0].equals("") || !p_formulaire[1].equals("") ||
@@ -337,11 +341,11 @@ public class PageSelection2 extends HttpServlet {
 					// Affichage formulaire et message d'erreur
 					CREHtmlFormulaire(response, Message.substring(1, Message.length()));
 				}
-
+ 
                 // Pour présentation projet / page de maintenance 				
 				//response.sendRedirect(request.getContextPath() + "/" + "PageMaintenance.html");
 
-			}
+			} 
 			// Si pas de paramètres --> Affichage formulaire vide à remplir
 			else  {CREHtmlFormulaire(response, "");}
 		
@@ -372,7 +376,7 @@ public class PageSelection2 extends HttpServlet {
 			// Flux HTML
 			  
 			// <head>
-			  out.println(header.GetPageHeaderCRE().toString());
+			  out.println(header.GetPageHeaderCRE(chaine).toString());
 
 			// <body>
 		      out.println("<body class=\"import\" onload=\"javascript:document.formulairegestip.cass.focus();\">\r\n");
@@ -506,7 +510,7 @@ public class PageSelection2 extends HttpServlet {
 
 			// Flux HTML
 			// <head>
-			out.println(header.GetPageHeaderCRE().toString());
+			out.println(header.GetPageHeaderCRE(chaine).toString());
 		      
 			// <body>
 		    out.println("<body class=\"import\" onload=\"javascript:document.formulairegestip.cass.focus();\">\r\n");

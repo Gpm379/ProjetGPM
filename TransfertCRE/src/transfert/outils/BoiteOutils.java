@@ -114,9 +114,6 @@ public class BoiteOutils {
 
 	}		
 	
-	
-	
-	
 	// Controle si zone num�rique
 	/*
 	public boolean ControleNumerique() {

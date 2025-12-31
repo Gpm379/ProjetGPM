@@ -27,7 +27,7 @@ public class HTMLheader {
 		this.Pied = pied;
 	}
     
-	// HTML <header>
+	// HTML <header> BASE
 	public StringBuffer GetPageHeaderBase() {
 
 		// Vider le buffer
@@ -71,7 +71,7 @@ public class HTMLheader {
 
 	// HTML <header> CRE 
 	// Chargement page sélection CRE
-	public StringBuffer GetPageHeaderCRE() {
+	public StringBuffer GetPageHeaderCRE(String SourceAutoCompletion) {
 
 		// Vider le buffer
 		sbh.delete(0, sbh.length());
@@ -101,7 +101,18 @@ public class HTMLheader {
             sbh.append("<script type=\"text/javascript\" src=\"js/datatables.js\"></script>");
             sbh.append("<script type=\"text/javascript\" src=\"js/transfert.js\"></script>");
             sbh.append("<script type=\"text/javascript\" src=\"js/plug-in-jquery.js\"></script>");
-              
+
+            // Initialiation script autocompletion
+            sbh.append("<script type=\"text/javascript\">");
+            sbh.append("$(function() {");
+            sbh.append(SourceAutoCompletion + ";");
+            sbh.append("$(\"#typecou\").autocomplete({");
+            sbh.append("source: liste");		 
+    				   //minLength: 1
+            sbh.append("});});");
+    		sbh.append("</script>");    			
+            // Fin Initialisation script autocompletion
+    		
  	        sbh.append("<!-- Si la version du navigateur est inférieure a IE 9,.... -->");
 	        sbh.append("<!--[if lt IE 9]>");
 	        sbh.append("  <script src=\"//html5shim.googlecode.com/svn/trunk/html5.js\"></script>");

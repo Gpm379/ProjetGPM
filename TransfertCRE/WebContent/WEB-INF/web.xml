@@ -37,70 +37,6 @@
   <servlet>
     <description>Selection transfert CRE</description>
     <display-name>PageSelection</display-name>
-    <servlet-name>transfert.servlet.PageSelection</servlet-name>
-    <servlet-class>transfert.servlet.PageSelection</servlet-class>
-    <init-param>
-      <param-name>serveurDEV</param-name>
-      <param-value>S44C0638</param-value>
-    </init-param> 
-     <init-param>
-      <param-name>bibDEV</param-name>
-      <param-value>AVTGPMDR</param-value>
-    </init-param>
-    <init-param>
-      <param-name>serveurREC</param-name>
-      <param-value>S65E890E</param-value>
-    </init-param>
-    <init-param>
-      <param-name>loginREC</param-name>
-      <param-value>ZAVTSECU</param-value>
-    </init-param>
-    <init-param>
-      <param-name>mdpREC</param-name>
-      <param-value>AVTMPG520</param-value>
-    </init-param>
-    <init-param>
-      <param-name>bibREC</param-name>
-      <param-value>AVTMPGDTA</param-value>
-    </init-param>
-    <init-param>
-      <param-name>serveurPROD</param-name>
-      <param-value>S65E890E</param-value>
-    </init-param>
-    <init-param>
-      <param-name>loginPROD</param-name>
-      <param-value>FICHIER</param-value>
-    </init-param>
-    <init-param>
-      <param-name>mdpPROD</param-name>
-      <param-value>GPM520AAA</param-value>
-    </init-param>
-    <init-param>
-      <param-name>bibPROD</param-name>
-      <param-value>AVTGPMDTA</param-value>
-    </init-param>
-    <init-param>
-      <param-name>retourMenu</param-name>
-      <param-value>transfert.servlet.PrestijAcceuil</param-value>
-    </init-param>
-    <init-param>
-      <param-name>lienQuitter</param-name>
-      <param-value>transfert.servlet.PageDeconnexion</param-value>
-    </init-param>
-    <init-param>
-      <param-name>lienErreur</param-name>
-      <param-value>transfert.servlet.HtmlSessionErreur</param-value>
-    </init-param>
-    <load-on-startup>2</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>transfert.servlet.PageSelection</servlet-name>
-    <url-pattern>/transfert.servlet.PageSelection</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description>Selection transfert CRE</description>
-    <display-name>PageSelection</display-name>
     <servlet-name>transfert.servlet.PageSelection2</servlet-name>
     <servlet-class>transfert.servlet.PageSelection2</servlet-class>
     <init-param>
@@ -157,7 +93,6 @@
     </init-param>
     <load-on-startup>2</load-on-startup>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>transfert.servlet.PageSelection2</servlet-name>
     <url-pattern>/transfert.servlet.PageSelection2</url-pattern>
