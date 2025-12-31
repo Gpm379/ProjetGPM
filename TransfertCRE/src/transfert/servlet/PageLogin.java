@@ -23,7 +23,8 @@ import java.io.*;
 import com.ibm.as400.access.*;
 import transfert.pages.*;
     
-@WebServlet(description = "Saisie login utilisateur Transfert", urlPatterns = { "/transfert.servlet.PageLogin" })
+//@WebServlet(description = "Saisie login utilisateur Transfert", urlPatterns = { "/transfert.servlet.PageLogin" })
+@WebServlet(description = "Saisie login utilisateur Transfert CRE", urlPatterns = { "/PageLogin" })
 /**
  * Servlet implementation class TransfertLogin  
  */    
@@ -43,6 +44,7 @@ public class PageLogin extends HttpServlet {
 	// Initialisation variables HTTP  
 	static String Programme, Adresse, Context, Scheme,  User, Acceuil;
 	static String Servlet, Pack, Workspace;	   
+	static String MapServlet;
 	
 	// Variables paramètres servlet serveurs/version CSS/version JS 
     static String serveurDB2, serveurLOC, serveurDEV, serveurREC, serveurPROD,
@@ -66,6 +68,7 @@ public class PageLogin extends HttpServlet {
 
 		// Nom servlet
 		Servlet    = config.getServletName();
+		//Servlet    = config.get
 		// Récupération paramètres associés au servlet
 	 	versionCSS = getInitParameter("versionCSS");
 	 	versionJS  = getInitParameter("versionJS"); 
@@ -82,16 +85,16 @@ public class PageLogin extends HttpServlet {
     @Override
 	synchronized protected void doGet(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
  
-		  // TODO Auto-generated method stub  
-	
 		  // Initialisation port + adresse + programme serveur web
 		  int    PortN = request.getServerPort();
 	      String Port  = new String(); 
-	      Port         = String.valueOf(PortN); 
+	      Port         = String.valueOf(PortN);   
 	      Serveur      = request.getServerName();
 	      Adresse      = request.getServerName() + ":" + Port;
           Context      = request.getContextPath() + "/";
           Scheme       = request.getScheme() + "://";
+          HttpServletMapping ddd = request.getHttpServletMapping();
+          MapServlet = ddd.getMatchValue();
           
  		  // Envoi flux HTML 
 		  prestijLoginHtml (res , "0");  
@@ -240,7 +243,7 @@ public class PageLogin extends HttpServlet {
 	     boolean EtatPageHTML = Erreur.isEmpty();
 	        
 		 // Chargement arguments pages HTML
-		 String [] argument = new String[] {Scheme, Adresse, Context, Servlet, Serveur, Erreur};
+		 String [] argument = new String[] {Scheme, Adresse, Context,  MapServlet, Serveur, Erreur};
 		 Login pageHTML = new Login(argument);
 	     
 		 // Initialisation Cache   

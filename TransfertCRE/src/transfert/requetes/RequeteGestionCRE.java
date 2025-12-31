@@ -265,7 +265,7 @@ public class RequeteGestionCRE {
 	        }
 
 	        // Non trouvé BCOUSFE / BCOUSFD---------------------------------------------- 	
-		    if (!TrouveCRE) {
+		    if (!TrouveCRE && OK) {
 			   OK = false;
 		       MessageErreur = "E" + " Aucun CRE pour les critères choisis... " ;
 		    }
@@ -319,7 +319,6 @@ public class RequeteGestionCRE {
 				stmtCRED.close();
 	   		} 
 			catch (SQLException e) {
-				// TODO Auto-generated catch block
 				System.out.println("Erreur SQL Exception... " + e);
 				OK = false;
 				MessageErreur = "EErreur SQL Exception... " + e;
@@ -431,7 +430,7 @@ public class RequeteGestionCRE {
 	         }
 		   
 		     // Non trouvé BCOUSFE / BCOUSFD---------------------------------------------- 	
-			 if (!TrouveCRE) {
+			 if (!TrouveCRE && OK) {
 				 OK = false;
 			     MessageErreur = "E" + " Aucun CRE pour les critères choisis... " ;
 			 }		
@@ -460,7 +459,7 @@ public class RequeteGestionCRE {
  
 		// Flag état recherche
 		OK = true;
-		String NumCRE = "";
+		String NumCRE = ""; 
 		
 		for (int i = 0; i < bcousfeFECCOU.size(); i++) { 
 
@@ -547,12 +546,6 @@ public class RequeteGestionCRE {
 			
 			 
 		} // Fin Boucle For 			
-			
-        //if (TrouveCREInsert) {
-        //  OK = false; 
-        //  MessageErreur = "E" + " Le numéro de CRE " + NumCRE + " est déjà présent en " + parametres[3] + ","   
-        //                  + " Il n'y a eu aucune MAJ pour ce CRE, ni pour les suivants...";
-        //}
 			
    		// -------------------------------------------------------------------------
 		// Déconnexion Total JDBC serveur Cible

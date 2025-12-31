@@ -69,8 +69,7 @@ public class HTMLheader {
 		 
 	} 
 
-	// HTML <header> CRE 
-	// Chargement page sélection CRE
+	// HTML <header> CRE (Chargement pour page sélection CRE)
 	public StringBuffer GetPageHeaderCRE(String SourceAutoCompletion) {
 
 		// Vider le buffer
