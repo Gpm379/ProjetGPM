@@ -28,6 +28,10 @@
       <param-name>lien</param-name>
       <param-value>PageSelection</param-value>
     </init-param>
+    <init-param> 
+      <param-name>mapping</param-name>
+      <param-value>PageLogin</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>

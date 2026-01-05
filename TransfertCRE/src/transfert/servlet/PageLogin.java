@@ -27,18 +27,18 @@ import transfert.pages.*;
 @WebServlet(description = "Saisie login utilisateur Transfert CRE", urlPatterns = { "/PageLogin" })
 /**
  * Servlet implementation class TransfertLogin  
- */    
+ */     
 public class PageLogin extends HttpServlet {  
 	         
-	// Déclaration variables et constantes 
+	// Déclaration variables et constantes  
 	private static final long serialVersionUID = 1L;
     static final String TITRE = "Connexion sur le serveur : ";
 	static final String ESP = "&nbsp;";                           // one space
 	static String string_date;                                    // Date                        
 	static String string_heure;                                   // Heure  
 	              
-	// Use to connect on AS400. 
-	static String Serveur = null;                                    
+	// Use to connect on AS400.   
+	static String Serveur = null;                                      
 	static AS400 systemI  = null;                                  // server system i  
 		 
 	// Initialisation variables HTTP  
@@ -68,14 +68,14 @@ public class PageLogin extends HttpServlet {
 
 		// Nom servlet
 		Servlet    = config.getServletName();
-		//Servlet    = config.get
 		// Récupération paramètres associés au servlet
 	 	versionCSS = getInitParameter("versionCSS");
 	 	versionJS  = getInitParameter("versionJS"); 
 		lien       = getInitParameter("lien");  
-	 	   
+		MapServlet = getInitParameter("mapping");
+		
         // Message console dans ini()  
-		 System.out.println( "Initialisation servlet : " + Servlet );
+		System.out.println( "Initialisation servlet : " + Servlet );
 	    
     }  // end of init          
      
@@ -93,8 +93,8 @@ public class PageLogin extends HttpServlet {
 	      Adresse      = request.getServerName() + ":" + Port;
           Context      = request.getContextPath() + "/";
           Scheme       = request.getScheme() + "://";
-          HttpServletMapping ddd = request.getHttpServletMapping();
-          MapServlet = ddd.getMatchValue();
+          //HttpServletMapping ddd = request.getHttpServletMapping();
+          //MapServlet = "PageLogin"; //ddd.getMatchValue();
           
  		  // Envoi flux HTML 
 		  prestijLoginHtml (res , "0");  
